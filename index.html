@@ -152,7 +152,6 @@
             color: var(--text-main);
             line-height: 1.5;
         }
-
     </style>
 </head>
 <body>
@@ -164,16 +163,16 @@
         </header>
 
         <div id="project-grid" class="project-grid">
-            <!-- Projects will be injected here by JavaScript -->
+            <!-- Projects will be injected here -->
         </div>
     </div>
     
-    <!-- Сначала загружаем данные -->
-    <script src="projects.js"></script> 
+
+    <script src="projects.js" defer></script> 
     
-    <!-- А ТОЛЬКО ПОТОМ запускаем скрипт, который их использует -->
-    <script>
-        // Убрали 'DOMContentLoaded', чтобы скрипт ждал загрузки projects.js
+
+    <script defer>
+        // Код для отрисовки кругов
         const grid = document.getElementById('project-grid');
         if (grid && window.PROJECTS) {
             window.PROJECTS.forEach(project => {
@@ -194,7 +193,7 @@
             });
         }
 
-        // --- Код для анимации (остается без изменений) ---
+        // Код для анимации
         const canvas = document.getElementById('lava-canvas');
         const ctx = canvas.getContext('2d');
         let width = canvas.width = window.innerWidth;
@@ -230,17 +229,10 @@
                 ctx.fill();
             }
         }
-        function init() {
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle());
-            }
-        }
+        function init() { for (let i = 0; i < particleCount; i++) { particles.push(new Particle()); } }
         function animate() {
             ctx.clearRect(0, 0, width, height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
+            particles.forEach(p => { p.update(); p.draw(); });
             requestAnimationFrame(animate);
         }
         window.addEventListener('resize', () => {
